@@ -1,5 +1,4 @@
-import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
-import { By } from '@angular/platform-browser';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { AutocompleteComponent } from './autocomplete.component';
 
@@ -27,7 +26,7 @@ describe('AutocompleteComponent', () => {
 		console.log(component.datalistId)
 	});
 
-	
+
 	it('should have defaults properly set', () => {		
 		expect(component.label).toBeUndefined();
 		expect(component.placeholder).toEqual('');
