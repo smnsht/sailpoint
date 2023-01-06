@@ -1,0 +1,40 @@
+div.demo-wrapper {
+	border: 1px solid black;
+	padding: 1em;
+	margin-bottom: 3em;
+}
+
+div.demo1 {
+	display: flex;
+}
+
+div.demo1 div.col {
+	flex: 50%;
+}
+
+
+/* decond demo */
+:host ::ng-deep .simons-styling label {
+	font-weight: bold;
+	margin-right: 1em;
+}
+
+div.demo2 {
+	border: 1px dashed grey;
+	padding: 1em;
+}
+
+:host ::ng-deep .simons-styling input {
+	color: green;
+}
+
+
+
+
+div.demo3 {
+	display: flex;
+}
+
+div.demo3 div.col {
+	flex: 50%;
+}

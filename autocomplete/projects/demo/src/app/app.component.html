@@ -1,0 +1,101 @@
+<div class="content" role="main">
+
+	<h1>Autocomplte component - showcase</h1>
+
+	<!-- DEFATULS -->
+	<div class="demo-wrapper">
+		<h3>Basic autocomplete - array data source (non-ajax)</h3>
+
+		<div class="demo1">
+			<div class="col">
+				<simons-autocomplete
+					datalist-id="list1" 			
+					[(value)]="demo1.value"		
+					[label]="demo1.label" 
+					[placeholder]="demo1.placeholder"
+					[disabled]="demo1.disabled"
+					[options]="demo1.lines()">
+				</simons-autocomplete>		
+			</div>
+
+			<div class="col">				
+				<table>
+					<tbody>
+						<tr>
+							<th>Label:</th>
+							<td><input type="text" maxlength="20" [(ngModel)]="demo1.label"/></td>
+						</tr>
+						<tr>
+							<th>Placeholder:</th>
+							<td><input type="text" maxlength="20" [(ngModel)]="demo1.placeholder"/></td>
+						</tr>
+						<tr>
+							<th>Disabled:</th>
+							<td><input type="checkbox" [(ngModel)]="demo1.disabled" /></td>
+						</tr>
+						<tr>
+							<th>Options:</th>
+							<td><textarea rows="5" [(ngModel)]="demo1.text"></textarea></td>
+						</tr>
+						<tr>
+							<th>Selected value:</th>
+							<td><input type="text" readonly="true" disabled="true" [(ngModel)]="demo1.value"/></td>
+						</tr>
+					</tbody>
+				</table>					
+			</div>
+		</div>		
+	</div>
+
+
+	<!-- STYLING && CONTENT PROJECTION -->
+	<div class="demo-wrapper">
+		<h3>Styling with CSS + custom slots</h3>
+
+		<div class="demo2">			
+			<simons-autocomplete class="simons-styling"
+				datalist-id="list2" 
+				[label]="demo2.label" 
+				[placeholder]="demo2.placeholder"
+				[options]="demo2.lines">
+
+					<i before-label>&gt;&gt;</i>			
+					<i after-label>&lt;&lt;</i>
+					<p bottom>bottom line</p>
+
+			</simons-autocomplete>		
+			
+		</div>		
+	</div>
+
+	<!-- AJAX DATA SOURCE -->
+	<div class="demo-wrapper">
+		<h3>Ajax data source</h3>
+
+		<div class="demo3">
+			<div class="col">
+				<simons-autocomplete 
+					label="Ajax data source:" 
+					src="http://localhost:5000/Cities" 
+					[maxResults]="demo3.limit" 
+					[minLength]="2">
+				</simons-autocomplete>
+			</div>
+	
+			<div class="col">
+				<p>
+					<label>Limit:</label>
+					<select [(ngModel)]="demo3.limit">
+						<option value="10">10</option>
+						<option value="20">20</option>
+						<option value="30">30</option>
+						<option value="40">40</option>
+						<option value="50">50</option>
+						<option value="100">100</option>
+					</select>
+				</p>
+			</div>		
+		</div>
+		
+	</div>
+</div>
