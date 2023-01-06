@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, EventEmitter, Input, OnDestroy, OnInit, Output, ViewChild } from '@angular/core';
 import { debounceTime, fromEvent, Subscription } from 'rxjs';
 import { ajax } from 'rxjs/ajax';
 
@@ -30,7 +30,7 @@ type tDelay = 200|300|400|500|600|700|800|900|1000;
   	`,
 	styles: []
 })
-export class AutocompleteComponent implements OnInit, AfterViewInit {
+export class AutocompleteComponent implements OnInit, AfterViewInit, OnDestroy {
 	
 	@ViewChild('input')
 	inputElement!: ElementRef;
@@ -121,13 +121,16 @@ export class AutocompleteComponent implements OnInit, AfterViewInit {
 				if(request) {
 					// TODO: I believe this should cancel ther underlying request, not sure...
 					request.unsubscribe();		
+					request = undefined;
 					this._loading = false;			
 				}
 
 				const term: string = inputElement.value;
 
 				// issue new request if conditions are met
-				if( term.length >= this.minLength && term.length <= MAX_LEN ) {
+				if( term.length >= this.minLength && term.length <= MAX_LEN && !this.options.includes(term) ) {
+					// TODO: in real-world component we might want to cache results in SessionStorage
+					
 					const url = new URL(this.src);
 					url.searchParams.append("term", term);
 					url.searchParams.append("limit", this.maxResults.toString());
@@ -137,18 +140,23 @@ export class AutocompleteComponent implements OnInit, AfterViewInit {
 						.getJSON(url.toString())
 						.subscribe({
 							next: (v) => this.options = v as string[],
+							complete: () => this._loading = false,
 							error: err => { 
 								console.error(err);
 								this.ajaxError.emit(err.message);
-							},
-							complete: () => {
 								this._loading = false;
-								request = undefined;
 							}
 						});
 				}
 			});		
 		}		
+	}
+
+
+	ngOnDestroy(): void {
+		if(this._subscription) {
+			this._subscription.unsubscribe();
+		}
 	}
 
 
